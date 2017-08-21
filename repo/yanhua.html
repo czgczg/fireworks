@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>yanhua</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: yellow;
+			overflow: hidden;
+		}
+		.firework{
+			position: absolute;
+			width: 10px;
+			height: 50px;
+			background: red;
+			border-radius: 50%;
+
+		}
+		.fires{
+			position: absolute;
+			width: 8px;
+			height: 8px;
+			background: blue;
+			border-radius: 50%;
+		}
+		
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		document.onclick=function (ev) {
+		// console.log(this)
+		// console.log(ev)
+
+		var x=ev.clientX,
+		y=ev.clientY;
+		var h=window.innerHeight;
+
+		firework(x,y,h);
+		}
+
+		var timer=null;
+		function firework(x,y,h){
+			var oDiv=document.createElement("div");
+			oDiv.className="firework";
+			oDiv.style.left=x+"px";
+			oDiv.style.top=h+"px";
+
+			document.body.appendChild(oDiv);
+			// let move up
+			var speed=10;
+			setInterval(function(){
+				oDiv.style.top=oDiv.offsetTop-speed+"px";
+				if(oDiv.offsetTop<=y){
+					clearInterval(timer);
+					//produce yanhua dot
+					//first clear bullet
+					document.body.removeChild(oDiv);
+					//pru dot
+					createFires(x,y);
+
+				}
+
+
+			},30);
+
+		}
+
+
+		function createFires(x,y){
+			var n=Math.ceil(Math.random()*50)+50;
+			var fires=[];
+			for(var i=0;i<n;i++){
+				fires[i]=document.createElement("div");
+			
+							fires[i].className="fires";
+				fires[i].style.left=x+"px";
+				fires[i].style.top=y+"px";
+				fires[i].speedX=Math.random()*20-10;
+				fires[i].speedY=Math.random()*20-10;
+				document.body.appendChild(fires[i]);
+			}
+			setInterval(function(){
+
+				for(var j=0;j<n;j++){
+
+				fires[j].style.left=fires[j].offsetLeft
+				+fires[j].speedX+"px";
+				fires[j].style.top=fires[j].offsetTop
+				+fires[j].speedY+"px";
+				fires[j].speedY+=1;
+
+				}
+			},30);
+		}
+
+
+
+	</script>
+</body>
+</html>
